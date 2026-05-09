@@ -56,25 +56,28 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
     }
 
     return (
-        <Card className="w-full h-full border-none shadow-none">
-            <CardHeader className="flex p-7">
-                <CardTitle className="text-xl font-bold">
+        <Card className="w-full border-slate-200/70 bg-white/85 shadow-[0_30px_90px_-28px_rgba(15,23,42,0.25)] backdrop-blur">
+            <CardHeader className="px-8 pt-8">
+                <CardTitle className="font-[family-name:var(--font-heading)] text-3xl font-semibold tracking-tight text-slate-950">
                     Create a new workspace
                 </CardTitle>
+                <p className="text-sm text-slate-600">
+                    Give your team a place to organize projects, tasks, and members.
+                </p>
             </CardHeader>
-            <div className="px-7">
+            <div className="px-8">
                 <DottedSeperator />
             </div>
-            <CardContent className="p-7">
+            <CardContent className="px-8 pb-8 pt-6">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <div className="flex flex-col gap-y-4">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                        <div className="space-y-5">
                             <FormField
                                 control={form.control}
                                 name="name"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>
+                                        <FormLabel className="text-sm font-medium text-slate-700">
                                             Workspace Name
                                         </FormLabel>
                                         <FormControl>
@@ -90,10 +93,13 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                                 control={form.control}
                                 name="image"
                                 render={({ field }) => (
-                                    <div className="flex flex-col gap-y-2">
-                                        <div className="flex items-center gap-x-5">
+                                    <div className="space-y-3">
+                                        <FormLabel className="text-sm font-medium text-slate-700">
+                                            Workspace Icon
+                                        </FormLabel>
+                                        <div className="flex items-center gap-x-5 rounded-2xl border border-dashed border-slate-200 bg-slate-50/80 p-4">
                                             {field.value ? (
-                                                <div className="size-[72px] relative rounded-md overflow-hidden">
+                                                <div className="relative size-[72px] overflow-hidden rounded-2xl ring-1 ring-slate-200">
                                                     <Image
                                                         alt="Logo"
                                                         fill
@@ -106,15 +112,15 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                                                     />
                                                 </div>
                                             ) : (
-                                                <Avatar className="size-[72px]">
+                                                <Avatar className="size-[72px] border border-slate-200 bg-white">
                                                     <AvatarFallback>
-                                                        <ImageIcon className="size-[36px] text-neutral-400" />
+                                                        <ImageIcon className="size-[36px] text-slate-400" />
                                                     </AvatarFallback>
                                                 </Avatar>
                                             )}
                                             <div className="flex flex-col">
-                                                <p className="text-sm">Workspace Icon</p>
-                                                <p className="text-sm text-muted-foreground">
+                                                <p className="text-sm font-medium text-slate-700">Choose a brand mark</p>
+                                                <p className="text-sm text-slate-500">
                                                     JPG, PNG, SVG or JPEG, max 1MB
                                                 </p>
                                                 <input
@@ -131,7 +137,7 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                                                         disabled={isPending}
                                                         variant="destructive"
                                                         size="xs"
-                                                        className="w-fit mt-2"
+                                                        className="mt-2 w-fit"
                                                         onClick={() => {
                                                             field.onChange(null);
                                                             if(inputRef.current) {
@@ -143,15 +149,15 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                                                     </Button>
                                                 ) : (
                                                     <Button
-                                                    type="button"
-                                                    disabled={isPending}
-                                                    variant="teritary"
-                                                    size="xs"
-                                                    className="w-fit mt-2"
-                                                    onClick={() => inputRef.current?.click()}
-                                                >
-                                                    Upload Image
-                                                </Button>
+                                                        type="button"
+                                                        disabled={isPending}
+                                                        variant="teritary"
+                                                        size="xs"
+                                                        className="mt-2 w-fit"
+                                                        onClick={() => inputRef.current?.click()}
+                                                    >
+                                                        Upload Image
+                                                    </Button>
                                                 )}
                                             </div>
                                         </div>
@@ -159,8 +165,8 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                                 )}
                             />
                         </div>
-                        <DottedSeperator className="py-7" />
-                        <div className="flex items-center justify-between">
+                        <DottedSeperator className="py-5" />
+                        <div className="flex items-center justify-between gap-4">
                                 <Button
                                     type="button"
                                     size="lg"
@@ -175,6 +181,7 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                                     type="submit"
                                     size="lg"
                                     disabled={isPending}
+                                    className="shadow-lg shadow-blue-500/20"
                                 >
                                     Create Workspace
                                 </Button>
