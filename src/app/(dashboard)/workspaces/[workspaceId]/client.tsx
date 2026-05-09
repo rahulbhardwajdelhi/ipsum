@@ -45,8 +45,8 @@ export const WorkspaceIdClient = () => {
     }
 
     return (
-        <div className="h-full flex flex-col space-y-4">
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <div className="flex h-full flex-col gap-4">
+            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
                 <TaskList data={tasks.documents} total={tasks.total} />
                 <ProjectList data={projects.documents} total={projects.total} />
                 <MembersList data={members.documents} total={members.total} />
@@ -66,14 +66,14 @@ export const TaskList = ({ data, total }: TaskListProps) => {
     const { open: createTask } = useCreateTaskModal();
 
     return (
-        <div className="flex flex-col gap-y-4 col-span-1">
-            <div className="bg-muted rounded-lg p-4">
-                <div className="flex items-center justify-between">
-                    <p className="text-lg font-semibold">
+        <div className="col-span-1 flex flex-col gap-y-4">
+            <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur">
+                <div className="flex items-center justify-between gap-3">
+                    <p className="text-lg font-semibold tracking-tight text-slate-950">
                         Tasks ({total})
                     </p>
                     <Button variant="muted" size="icon" onClick={createTask}>
-                        <PlusIcon className="size-4 text-neutral-400" />
+                        <PlusIcon className="size-4 text-slate-500" />
                     </Button>
                 </div>
                 <DottedSeperator className="my-4" />
@@ -81,12 +81,12 @@ export const TaskList = ({ data, total }: TaskListProps) => {
                     {data.map((task) => (
                         <li key={task.$id}>
                             <Link href={`/workspaces/${workspaceId}/tasks/${task.$id}`}>
-                                <Card className="shadow-none rounded-lg hover:opacity-75 transition">
+                                <Card className="rounded-xl border-slate-200/70 bg-white/90 shadow-none transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm">
                                     <CardContent className="p-4">
-                                        <p className="text-lg font-medium truncate">{task.name}</p>
-                                        <div className="flex items-centergap-x-2">
-                                            <p>{task.project?.name}&nbsp;</p>
-                                            <div className="text-sm text-muted-foreground flex items-center">
+                                        <p className="truncate text-lg font-medium text-slate-950">{task.name}</p>
+                                        <div className="flex items-center gap-2 text-sm text-slate-500">
+                                            <p className="truncate">{task.project?.name}</p>
+                                            <div className="flex items-center">
                                                 <CalendarIcon className="size-3 mr-1" />
                                                 <span className="truncate">
                                                     {formatDistanceToNow(new Date(task.dueDate))}
@@ -122,14 +122,14 @@ export const ProjectList = ({ data, total }: ProjectListProps) => {
     const workspaceId = useWorkspaceId();
 
     return (
-        <div className="flex flex-col gap-y-4 col-span-1">
-            <div className="bg-white border rounded-lg p-4">
-                <div className="flex items-center justify-between">
-                    <p className="text-lg font-semibold">
+        <div className="col-span-1 flex flex-col gap-y-4">
+            <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur">
+                <div className="flex items-center justify-between gap-3">
+                    <p className="text-lg font-semibold tracking-tight text-slate-950">
                         Projects ({total})
                     </p>
                     <Button variant="secondary" size="icon" onClick={createProject}>
-                        <PlusIcon className="size-4 text-neutral-400" />
+                        <PlusIcon className="size-4 text-slate-500" />
                     </Button>
                 </div>
                 <DottedSeperator className="my-4" />
@@ -137,15 +137,15 @@ export const ProjectList = ({ data, total }: ProjectListProps) => {
                     {data.map((project) => (
                         <li key={project.$id}>
                             <Link href={`/workspaces/${workspaceId}/projects/${project.$id}`}>
-                                <Card className="shadow-none rounded-lg hover:opacity-75 transition">
-                                    <CardContent className="p-4 flex items-center gap-x-2.5">
+                                <Card className="rounded-xl border-slate-200/70 bg-white/90 shadow-none transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm">
+                                    <CardContent className="flex items-center gap-x-3 p-4">
                                         <ProjectAvatar
                                             className="size-12"
                                             fallbackClassName="text-lg"
                                             name={project.name}
                                             image={project.imageUrl}
                                         />
-                                        <p className="text-lg font-medium truncate">
+                                        <p className="truncate text-lg font-medium text-slate-950">
                                             {project.name} 
                                         </p>
                                     </CardContent> 
@@ -171,15 +171,15 @@ export const MembersList = ({ data, total }: MembersListProps) => {
     const workspaceId = useWorkspaceId();
 
     return (
-        <div className="flex flex-col gap-y-4 col-span-1">
-            <div className="bg-white border rounded-lg p-4">
-                <div className="flex items-center justify-between">
-                    <p className="text-lg font-semibold">
+        <div className="col-span-1 flex flex-col gap-y-4">
+            <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur">
+                <div className="flex items-center justify-between gap-3">
+                    <p className="text-lg font-semibold tracking-tight text-slate-950">
                         Members ({total})
                     </p>
                     <Button variant="secondary" size="icon" asChild>
                         <Link href={`/workspaces/${workspaceId}/members`}> 
-                            <SettingsIcon className="size-4 text-neutral-400" />
+                            <SettingsIcon className="size-4 text-slate-500" />
                         </Link>
                     </Button>
                 </div>
@@ -187,17 +187,17 @@ export const MembersList = ({ data, total }: MembersListProps) => {
                 <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {data.map((member) => (
                         <li key={member.$id}>
-                            <Card className="shadow-none rounded-lg overflow-hidden">
-                                <CardContent className="p-4 flex flex-col items-center gap-x-2">
+                            <Card className="overflow-hidden rounded-xl border-slate-200/70 bg-white/90 shadow-none transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm">
+                                <CardContent className="flex flex-col items-center gap-x-2 p-4">
                                     <MemberAvatar
                                         className="size-12"
                                         name={member.name}
                                     />
                                     <div className="flex flex-col items-center overflow-hidden">
-                                        <p className="text-lg font-medium line-clamp-1">
+                                        <p className="line-clamp-1 text-lg font-medium text-slate-950">
                                             {member.name} 
                                         </p>
-                                        <p className="text-sm text-muted-foreground line-clamp-1">
+                                        <p className="line-clamp-1 text-sm text-slate-500">
                                             {member.email}
                                         </p>
                                     </div>

@@ -5,9 +5,9 @@ import { DottedSeperator } from "./dotted-seperator";
 
 export const Analytics = ({ data }: ProjectAnalyticsResponseType) => {
     return (
-        <ScrollArea className="border rounded-lg w-full whitespace-nowrap shrink-0">
-            <div className="w-full flex flex-row">
-                <div className="flex items-center flex-1">
+        <ScrollArea className="w-full rounded-2xl border border-slate-200/70 bg-white/70 whitespace-nowrap shrink-0 shadow-sm backdrop-blur">
+            <div className="flex w-full flex-row">
+                <div className="flex flex-1 items-center">
                     <AnalyticsCard
                         title="Total Tasks"
                         value={data.taskCount}
@@ -16,7 +16,7 @@ export const Analytics = ({ data }: ProjectAnalyticsResponseType) => {
                     />
                     <DottedSeperator direction="vertical" />
                 </div>
-                <div className="flex items-center flex-1">
+                <div className="flex flex-1 items-center">
                     <AnalyticsCard
                         title="Assigned Task"
                         value={data.assignedTaskCount}
@@ -25,7 +25,7 @@ export const Analytics = ({ data }: ProjectAnalyticsResponseType) => {
                     />
                     <DottedSeperator direction="vertical" />
                 </div>
-                <div className="flex items-center flex-1">
+                <div className="flex flex-1 items-center">
                     <AnalyticsCard
                         title="Completed Task"
                         value={data.completedTaskCount}
@@ -34,7 +34,7 @@ export const Analytics = ({ data }: ProjectAnalyticsResponseType) => {
                     />
                     <DottedSeperator direction="vertical" />
                 </div>
-                <div className="flex items-center flex-1">
+                <div className="flex flex-1 items-center">
                     <AnalyticsCard
                         title="Overdue Task"
                         value={data.overdueTaskCount}
@@ -43,7 +43,7 @@ export const Analytics = ({ data }: ProjectAnalyticsResponseType) => {
                     />
                     <DottedSeperator direction="vertical" />
                 </div>
-                <div className="flex items-center flex-1">
+                <div className="flex flex-1 items-center">
                     <AnalyticsCard
                         title="Incomplete Task"
                         value={data.incompleteTaskCount}

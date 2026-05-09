@@ -15,7 +15,7 @@ const routes = [
         activeIcon: GoHomeFill,
     },
     {
-        label: "MyTask",
+        label: "My Tasks",
         href: "/tasks",
         icon: GoCheckCircle,
         activeIcon: GoCheckCircleFill,
@@ -39,22 +39,26 @@ export const Navigation = () => {
     const pathname = usePathname();
 
     return (
-        <ul className="flex flex-col">
+        <ul className="flex flex-col gap-1">
             {routes.map((item) => {
                 const fullHref = `/workspaces/${workspaceId}${item.href}`
                 const isActive = pathname === fullHref;
                 const Icon = isActive ? item.activeIcon : item.icon;
 
                 return(
-                    <Link key={item.href} href={fullHref}>
-                        <div className={cn(
-                           "flex items-center gap-2.5 p-2.5 rounded-md font-medium hover:text-primary transition text-neutral-500",
-                            isActive && "bg-white shadow-sm hover:opacity-100 text-primary"
-                        )}>
-                            <Icon className="size-5 text-neutral-500" />
+                    <li key={item.href}>
+                        <Link
+                            href={fullHref}
+                            aria-current={isActive ? "page" : undefined}
+                            className={cn(
+                                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-950",
+                                isActive && "bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-100"
+                            )}
+                        >
+                            <Icon className={cn("size-5", isActive ? "text-blue-600" : "text-slate-400")} />
                             {item.label}
-                        </div>
-                    </Link>
+                        </Link>
+                    </li>
                 )
             })}
         </ul>

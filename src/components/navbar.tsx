@@ -7,11 +7,11 @@ import { MobileSidebar } from "./mobile-sidebar";
 const pathnameMap = {
     "tasks": {
         title: "My Tasks",
-        description: "View al of your tasks here",
+        description: "View all of your tasks here",
     },
     "projects": {
-        title: "My Project",
-        description: "View tasks of your project here",
+        title: "My Projects",
+        description: "View the projects inside this workspace",
     },
 };
 
@@ -28,10 +28,12 @@ export const Navbar = () => {
     const { title, description } = pathnameMap[pathnameKey] || defaultMap;
 
     return (
-        <nav className="pt-4 px-6 flex items-center justify-between">
-            <div className="flex-col hidden lg:flex">
-                <h1 className="text-2xl font-semibold">{title}</h1>
-                <p className="text-muted-foreground">{description}</p>
+        <nav className="sticky top-0 z-20 flex items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+            <div className="hidden flex-col rounded-2xl border border-white/70 bg-white/70 px-5 py-4 shadow-sm backdrop-blur lg:flex">
+                <h1 className="font-[family-name:var(--font-heading)] text-2xl font-semibold tracking-tight text-slate-950">
+                    {title}
+                </h1>
+                <p className="text-sm text-slate-500">{description}</p>
             </div>
             <MobileSidebar />
             <UserButton />
