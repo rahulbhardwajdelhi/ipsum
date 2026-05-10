@@ -18,6 +18,8 @@ import { TaskStatus } from "../types";
 import { useBulkUpdateTask } from "../api/use-bulk-update-tasks";
 import { DataCalendar } from "./data-calendar";
 import { useProjectId } from "@/features/projects/hooks/use-project-id";
+import { Skeleton } from "@/components/ui/skeleton";
+import { startTransition } from "react";
 
 interface TaskViewSwitcherProps {
     hideProjectFilter?: boolean;
@@ -64,7 +66,11 @@ export const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) =
     return (
         <Tabs
             defaultValue={view}
-            onValueChange={setView}
+            onValueChange={(value) => {
+                startTransition(() => {
+                    setView(value);
+                });
+            }}
             className="flex-1 w-full border rounded-lg"
         >
             <div className="h-full flex flex-col overflow-auto p-4">
@@ -102,8 +108,10 @@ export const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) =
                     <DataFilters hideProjectFilter={hideProjectFilter} />
                 <DottedSeperator className="my-4" />
                 {isLoadingTasks ? (
-                    <div className="w-full border rounded-lg h-[200px] flex flex-col items-center justify-center">
-                        <Loader className="size-5 animate-spin text-muted-foreground" />
+                    <div className="grid w-full gap-3 md:grid-cols-2 xl:grid-cols-3">
+                        <Skeleton className="h-40 rounded-2xl" />
+                        <Skeleton className="h-40 rounded-2xl" />
+                        <Skeleton className="h-40 rounded-2xl" />
                     </div>
                 ) : (
                 <>

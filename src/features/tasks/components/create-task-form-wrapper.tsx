@@ -1,8 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useGetMembers } from "@/features/members/api/use-get-members";
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
-import { Loader } from "lucide-react";
 import { CreateTaskForm } from "./create-task-form";
 
 interface CreateTaskFormWrapperProps {
@@ -32,9 +32,13 @@ export const CreateTaskFormWrapper = ({
 
     if (isLoading) {
         return (
-            <Card className="w-full h-[714px] border-none shadow-none">
-                <CardContent className="flex items-center justify-center h-full">
-                    <Loader className="size-5 animate-spin text-muted-foreground" />
+            <Card className="w-full border-slate-200/70 bg-white/80 shadow-sm backdrop-blur">
+                <CardContent className="space-y-4 p-6">
+                    <Skeleton className="h-8 w-56" />
+                    <Skeleton className="h-4 w-80" />
+                    <Skeleton className="h-12 w-full rounded-2xl" />
+                    <Skeleton className="h-12 w-full rounded-2xl" />
+                    <Skeleton className="h-12 w-2/3 rounded-2xl" />
                 </CardContent>
             </Card>
         )

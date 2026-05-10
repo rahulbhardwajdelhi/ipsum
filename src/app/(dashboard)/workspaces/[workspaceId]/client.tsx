@@ -21,6 +21,7 @@ import { Project } from "@/features/projects/types";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { Member } from "@/features/members/types";
 import { MemberAvatar } from "@/features/members/components/member-avatar";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const WorkspaceIdClient = () => {
     const workspaceId = useWorkspaceId();
@@ -37,7 +38,7 @@ export const WorkspaceIdClient = () => {
         isLoadingMembers;    
 
     if (isLoading) {
-        return <PageLoader />
+        return <WorkspaceDashboardSkeleton />
     }
 
     if (!analytics || !tasks || !projects || !members) {
@@ -210,6 +211,46 @@ export const MembersList = ({ data, total }: MembersListProps) => {
                     </li>
                 </ul>
             </div>
+        </div>
+    );
+};
+
+const WorkspaceDashboardSkeleton = () => {
+    return (
+        <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+                <SkeletonPanel title="Tasks" />
+                <SkeletonPanel title="Projects" />
+                <SkeletonPanel title="Members" />
+            </div>
+            <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur">
+                <div className="flex items-center justify-between gap-3">
+                    <Skeleton className="h-5 w-28" />
+                    <Skeleton className="size-8 rounded-full" />
+                </div>
+                <div className="mt-5 flex gap-3 overflow-hidden">
+                    <Skeleton className="h-56 min-w-[240px] flex-1 rounded-2xl" />
+                    <Skeleton className="h-56 min-w-[240px] flex-1 rounded-2xl" />
+                    <Skeleton className="h-56 min-w-[240px] flex-1 rounded-2xl" />
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const SkeletonPanel = ({ title }: { title: string }) => {
+    return (
+        <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm backdrop-blur">
+            <div className="flex items-center justify-between gap-3">
+                <Skeleton className="h-5 w-24" />
+                <Skeleton className="size-8 rounded-full" />
+            </div>
+            <div className="mt-4 space-y-3">
+                <Skeleton className="h-20 w-full rounded-2xl" />
+                <Skeleton className="h-20 w-full rounded-2xl" />
+                <Skeleton className="h-20 w-full rounded-2xl" />
+            </div>
+            <div className="sr-only">{title}</div>
         </div>
     );
 };
