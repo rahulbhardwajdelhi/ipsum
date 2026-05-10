@@ -8,11 +8,13 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { RiAddCircleFill } from "react-icons/ri";
+import { useRouter } from "next/navigation";
 
 export const Projects = () => {
     const pathname = usePathname();
     const { open } = useCreateProjectModal();
     const workspaceId = useWorkspaceId();
+    const router = useRouter();
     const { data } = useGetProjects({
         workspaceId,
     });
@@ -28,7 +30,11 @@ export const Projects = () => {
                 const isActive = pathname === href;
 
                 return (
-                    <Link href={href} key={project.$id}>
+                    <Link
+                        href={href}
+                        key={project.$id}
+                        onMouseEnter={() => router.prefetch(href)}
+                    >
                         <div
                             className={cn(
                                 "flex items-center gap-2.5 p-2.5 rounded-md hover:opacity-75 transition cursor-pointer text-neutral-500",
