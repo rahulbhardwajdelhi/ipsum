@@ -71,25 +71,25 @@ export const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) =
                     setView(value);
                 });
             }}
-            className="flex-1 w-full border rounded-lg"
+            className="flex-1 w-full rounded-2xl border border-slate-200/70 bg-white/80 shadow-sm backdrop-blur"
         >
             <div className="h-full flex flex-col overflow-auto p-4">
                 <div className="flex flex-col gap-y-2 lg:flex-row justify-between items-center">
-                    <TabsList className="w-full lg:w-auto">
+                    <TabsList className="w-full rounded-xl border border-slate-200 bg-white/85 p-1 lg:w-auto">
                         <TabsTrigger
-                            className="h-8 w-full lg:w-auto"
+                            className="h-8 w-full rounded-lg data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 data-[state=active]:shadow-none lg:w-auto"
                             value="table"
                         >
                             Table
                         </TabsTrigger>
                         <TabsTrigger
-                            className="h-8 w-full lg:w-auto"
+                            className="h-8 w-full rounded-lg data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 data-[state=active]:shadow-none lg:w-auto"
                             value="kanban"
                         >
                             Kanban
                         </TabsTrigger>
                         <TabsTrigger
-                            className="h-8 w-full lg:w-auto"
+                            className="h-8 w-full rounded-lg data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 data-[state=active]:shadow-none lg:w-auto"
                             value="calender"
                         >
                             Calender
@@ -98,7 +98,7 @@ export const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) =
                     <Button
                         onClick={open}
                         size="sm"
-                        className="w-full lg:w-auto"
+                        className="interactive-sheen w-full lg:w-auto"
                     >
                         <PlusIcon className="size-4 mr-2" />
                         New
@@ -109,9 +109,9 @@ export const TaskViewSwitcher = ({ hideProjectFilter }: TaskViewSwitcherProps) =
                 <DottedSeperator className="my-4" />
                 {isLoadingTasks ? (
                     <div className="grid w-full gap-3 md:grid-cols-2 xl:grid-cols-3">
-                        <Skeleton className="h-40 rounded-2xl" />
-                        <Skeleton className="h-40 rounded-2xl" />
-                        <Skeleton className="h-40 rounded-2xl" />
+                        <Skeleton className="ticker-pop h-40 rounded-2xl" />
+                        <Skeleton className="ticker-pop h-40 rounded-2xl" />
+                        <Skeleton className="ticker-pop h-40 rounded-2xl" />
                     </div>
                 ) : (
                 <>
