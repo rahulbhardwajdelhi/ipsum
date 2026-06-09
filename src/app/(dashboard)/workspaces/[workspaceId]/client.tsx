@@ -82,7 +82,7 @@ export const TaskList = ({ data, total }: TaskListProps) => {
                     {data.map((task) => (
                         <li key={task.$id}>
                             <Link href={`/workspaces/${workspaceId}/tasks/${task.$id}`}>
-                                <Card className="rounded-xl border-slate-200/70 bg-white/90 shadow-none transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm">
+                                <Card className="interactive-sheen hover-lift rounded-xl border-slate-200/70 bg-white/90 shadow-none">
                                     <CardContent className="p-4">
                                         <p className="truncate text-lg font-medium text-slate-950">{task.name}</p>
                                         <div className="flex items-center gap-2 text-sm text-slate-500">
@@ -138,7 +138,7 @@ export const ProjectList = ({ data, total }: ProjectListProps) => {
                     {data.map((project) => (
                         <li key={project.$id}>
                             <Link href={`/workspaces/${workspaceId}/projects/${project.$id}`}>
-                                <Card className="rounded-xl border-slate-200/70 bg-white/90 shadow-none transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm">
+                                <Card className="interactive-sheen hover-lift rounded-xl border-slate-200/70 bg-white/90 shadow-none">
                                     <CardContent className="flex items-center gap-x-3 p-4">
                                         <ProjectAvatar
                                             className="size-12"
@@ -188,7 +188,7 @@ export const MembersList = ({ data, total }: MembersListProps) => {
                 <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {data.map((member) => (
                         <li key={member.$id}>
-                            <Card className="overflow-hidden rounded-xl border-slate-200/70 bg-white/90 shadow-none transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-sm">
+                            <Card className="interactive-sheen hover-lift overflow-hidden rounded-xl border-slate-200/70 bg-white/90 shadow-none">
                                 <CardContent className="flex flex-col items-center gap-x-2 p-4">
                                     <MemberAvatar
                                         className="size-12"
