@@ -9,6 +9,15 @@ import tasks from "@/features/tasks/server/route";
 
 const app = new Hono().basePath("/api");
 
+app.onError((error, c) => {
+    console.error("API route error", error);
+
+    return c.json(
+        { error: "Internal server error" },
+        500,
+    );
+});
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const routes = app
     .route("/auth", auth)
