@@ -63,11 +63,17 @@ const app = new Hono()
             const user = c.get("user");
             const databases = c.get("databases");
 
-            const memberToDelete = await databases.getDocument(
-                DATABASE_ID,
-                MEMBERS_ID,
-                memberId,
-            );
+            let memberToDelete;
+
+            try {
+                memberToDelete = await databases.getDocument(
+                    DATABASE_ID,
+                    MEMBERS_ID,
+                    memberId,
+                );
+            } catch {
+                return c.json({ error: "Member not found" }, 404);
+            }
 
             const allMembersInWorkspace = await databases.listDocuments(
                 DATABASE_ID,
@@ -85,7 +91,7 @@ const app = new Hono()
                 return c.json({ error: "Unauthorized" }, 401);
             }
 
-            if (member.$id !== memberToDelete.$id && member.role == MemberRole.ADMIN) {
+            if (member.$id !== memberToDelete.$id && member.role !== MemberRole.ADMIN) {
                 return c.json({ error: "Unauthorized" }, 401);
             }
 
@@ -112,11 +118,17 @@ const app = new Hono()
             const user = c.get("user");
             const databases = c.get("databases");
 
-            const memberToUpdate = await databases.getDocument(
-                DATABASE_ID,
-                MEMBERS_ID,
-                memberId,
-            );
+            let memberToUpdate;
+
+            try {
+                memberToUpdate = await databases.getDocument(
+                    DATABASE_ID,
+                    MEMBERS_ID,
+                    memberId,
+                );
+            } catch {
+                return c.json({ error: "Member not found" }, 404);
+            }
 
             const allMembersInWorkspace = await databases.listDocuments(
                 DATABASE_ID,
@@ -134,7 +146,7 @@ const app = new Hono()
                 return c.json({ error: "Unauthorized" }, 401);
             }
 
-            if (member.role == MemberRole.ADMIN) {
+            if (member.role !== MemberRole.ADMIN) {
                 return c.json({ error: "Unauthorized" }, 401);
             }
 
