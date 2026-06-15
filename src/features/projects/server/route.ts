@@ -107,11 +107,17 @@ const app = new Hono()
             const databases = c.get("databases");
             const { projectId } = c.req.param();
 
-            const project = await databases.getDocument<Project>(
-               DATABASE_ID,
-               PROJECTS_ID,
-               projectId, 
-            );
+            let project;
+
+            try {
+                project = await databases.getDocument<Project>(
+                    DATABASE_ID,
+                    PROJECTS_ID,
+                    projectId,
+                );
+            } catch {
+                return c.json({ error: "Project not found" }, 404);
+            }
 
             const member = await getMember({
                 databases,
@@ -138,11 +144,17 @@ const app = new Hono()
             const { projectId } = c.req.param();
             const { name, image } = c.req.valid("form");
 
-            const existingProject = await databases.getDocument<Project>(
-                DATABASE_ID,
-                PROJECTS_ID,
-                projectId
-            );
+            let existingProject;
+
+            try {
+                existingProject = await databases.getDocument<Project>(
+                    DATABASE_ID,
+                    PROJECTS_ID,
+                    projectId
+                );
+            } catch {
+                return c.json({ error: "Project not found" }, 404);
+            }
 
             const member = await getMember({
                 databases,
@@ -195,11 +207,17 @@ const app = new Hono()
 
             const { projectId } = c.req.param();
 
-            const existingProject = await databases.getDocument<Project>(
-                DATABASE_ID,
-                PROJECTS_ID,
-                projectId
-            );
+            let existingProject;
+
+            try {
+                existingProject = await databases.getDocument<Project>(
+                    DATABASE_ID,
+                    PROJECTS_ID,
+                    projectId
+                );
+            } catch {
+                return c.json({ error: "Project not found" }, 404);
+            }
 
             const member = await getMember({
                 databases,
@@ -230,11 +248,17 @@ const app = new Hono()
             const user = c.get("user");
             const { projectId } = c.req.param();
 
-            const project = await databases.getDocument<Project>(
-                DATABASE_ID,
-                PROJECTS_ID,
-                projectId
-            );
+            let project;
+
+            try {
+                project = await databases.getDocument<Project>(
+                    DATABASE_ID,
+                    PROJECTS_ID,
+                    projectId
+                );
+            } catch {
+                return c.json({ error: "Project not found" }, 404);
+            }
 
             const member = await getMember({
                 databases,

@@ -19,11 +19,17 @@ const app = new Hono()
             const databases = c.get("databases");
             const { taskId } = c.req.param();
 
-            const task = await databases.getDocument<Task>(
-                DATABASE_ID,
-                TASKS_ID,
-                taskId,
-            );
+            let task;
+
+            try {
+                task = await databases.getDocument<Task>(
+                    DATABASE_ID,
+                    TASKS_ID,
+                    taskId,
+                );
+            } catch {
+                return c.json({ error: "Task not found" }, 404);
+            }
 
             const member = await getMember({
                 databases,
@@ -88,27 +94,22 @@ const app = new Hono()
             ];
 
             if (projectId) {
-                console.log("projectId: ", projectId);
                 query.push(Query.equal("projectId", projectId));
             }
 
             if (status) {
-                console.log("status: ", status);
                 query.push(Query.equal("status", status));
             }
 
             if (assignmeId) {
-                console.log("assignmeId: ", assignmeId);
                 query.push(Query.equal("assignmeId", assignmeId));
             }
 
             if (dueDate) {
-                console.log("dueDate: ", dueDate);
                 query.push(Query.equal("dueDate", dueDate));
             }
 
             if (search) {
-                console.log("search: ", search);
                 query.push(Query.search("name", search));
             }
 
@@ -247,11 +248,17 @@ const app = new Hono()
 
             const { taskId } = c.req.param();
 
-            const existingTask = await databases.getDocument<Task>(
-                DATABASE_ID,
-                TASKS_ID,
-                taskId,
-            );
+            let existingTask;
+
+            try {
+                existingTask = await databases.getDocument<Task>(
+                    DATABASE_ID,
+                    TASKS_ID,
+                    taskId,
+                );
+            } catch {
+                return c.json({ error: "Task not found" }, 404);
+            }
 
             const member = await getMember({
                 databases,
@@ -289,11 +296,17 @@ const app = new Hono()
             const { users } = await createAdminClient();
             const { taskId } = c.req.param();
 
-            const task = await databases.getDocument<Task>(
-                DATABASE_ID,
-                TASKS_ID,
-                taskId,
-            );
+            let task;
+
+            try {
+                task = await databases.getDocument<Task>(
+                    DATABASE_ID,
+                    TASKS_ID,
+                    taskId,
+                );
+            } catch {
+                return c.json({ error: "Task not found" }, 404);
+            }
 
             const currentMember = await getMember({
                 databases,
@@ -305,17 +318,29 @@ const app = new Hono()
                 return c.json({ error: "Unauthorized"}, 401);
             }
 
-            const project = await databases.getDocument<Project>(
-                DATABASE_ID,
-                PROJECTS_ID,
-                task.projectId
-            );
+            let project;
 
-            const member = await databases.getDocument(
-                DATABASE_ID,
-                MEMBERS_ID,
-                task.assignmeId
-            );
+            try {
+                project = await databases.getDocument<Project>(
+                    DATABASE_ID,
+                    PROJECTS_ID,
+                    task.projectId
+                );
+            } catch {
+                return c.json({ error: "Project not found" }, 404);
+            }
+
+            let member;
+
+            try {
+                member = await databases.getDocument(
+                    DATABASE_ID,
+                    MEMBERS_ID,
+                    task.assignmeId
+                );
+            } catch {
+                return c.json({ error: "Assignee not found" }, 404);
+            }
 
             const user = await users.get(member.userId);
 
@@ -362,13 +387,17 @@ const app = new Hono()
 
             const workspaceIds = new Set(tasksToUpdate.documents.map(task => task.workspaceId));
             if (workspaceIds.size !== 1) {
-                return c.json({ error: "All tasks must belong to the same workspace" })
+                return c.json({ error: "All tasks must belong to the same workspace" }, 400);
             }
 
             const workspaceId = workspaceIds.values().next().value;
 
             if (!workspaceId) {
                 return c.json({ error: "Workspace ID is required" }, 400);
+            }
+
+            if (tasksToUpdate.documents.length !== tasks.length) {
+                return c.json({ error: "One or more tasks were not found" }, 404);
             }
 
             const member = await getMember({
